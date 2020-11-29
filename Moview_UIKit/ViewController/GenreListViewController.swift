@@ -67,7 +67,13 @@ extension GenreListViewController: UICollectionViewDataSource {
     
 }
 
-extension GenreListViewController: UICollectionViewDelegateFlowLayout {
+extension GenreListViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let destination = MovieDetailViewController.instantiate()
+        destination.movie = movies[indexPath.item]
+        navigationController?.pushViewController(destination, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(
             width: (collectionView.frame.size.width - 10) / 2 ,
