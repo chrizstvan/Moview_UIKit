@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MoviePosterViewCell" customModule="Moview_UIKit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="125" height="170"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="125" height="170"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BL8-ue-dTC">
+                        <rect key="frame" x="0.0" y="0.0" width="125" height="170"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="BL8-ue-dTC" secondAttribute="bottom" id="15g-Fl-OYw"/>
+                <constraint firstItem="BL8-ue-dTC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="4UH-Y7-p6W"/>
+                <constraint firstAttribute="trailing" secondItem="BL8-ue-dTC" secondAttribute="trailing" id="Czb-Uj-XfT"/>
+                <constraint firstItem="BL8-ue-dTC" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Xfz-WQ-7vH"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="125" height="170"/>
+            <connections>
+                <outlet property="poster" destination="BL8-ue-dTC" id="XHg-ng-joN"/>
+            </connections>
+            <point key="canvasLocation" x="138.40579710144928" y="77.678571428571431"/>
+        </collectionViewCell>
+    </objects>
+</document>
