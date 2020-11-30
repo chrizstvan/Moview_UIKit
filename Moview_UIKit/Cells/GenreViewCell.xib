@@ -9,42 +9,45 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="95" id="KGk-i7-Jjw" customClass="GenreViewCell" customModule="Moview_UIKit" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="58" id="KGk-i7-Jjw" customClass="GenreViewCell" customModule="Moview_UIKit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQd-Iv-S1R">
-                        <rect key="frame" x="16" y="16" width="288" height="21"/>
+                        <rect key="frame" x="16" y="16" width="42" height="26"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZFc-di-hju">
-                        <rect key="frame" x="16" y="45" width="288" height="34"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="rBN-jN-BJd">
+                        <rect key="frame" x="280" y="17.5" width="24" height="23"/>
+                        <color key="tintColor" red="0.99955970049999998" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="ESJ-8f-T9S"/>
+                            <constraint firstAttribute="width" constant="24" id="uzb-eB-2yQ"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="ZFc-di-hju" secondAttribute="trailing" constant="16" id="0Va-tx-NOE"/>
-                    <constraint firstItem="ZFc-di-hju" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="7X9-r2-8ZC"/>
-                    <constraint firstAttribute="trailing" secondItem="fQd-Iv-S1R" secondAttribute="trailing" constant="16" id="D5F-24-Sjc"/>
+                    <constraint firstItem="rBN-jN-BJd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fQd-Iv-S1R" secondAttribute="trailing" constant="16" id="9w6-hQ-siY"/>
                     <constraint firstItem="fQd-Iv-S1R" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="KBf-um-zMI"/>
+                    <constraint firstAttribute="bottom" secondItem="fQd-Iv-S1R" secondAttribute="bottom" constant="16" id="UOQ-FM-ChD"/>
                     <constraint firstItem="fQd-Iv-S1R" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="Vvk-gF-l29"/>
-                    <constraint firstItem="ZFc-di-hju" firstAttribute="top" secondItem="fQd-Iv-S1R" secondAttribute="bottom" constant="8" id="YGK-0i-04O"/>
-                    <constraint firstAttribute="bottom" secondItem="ZFc-di-hju" secondAttribute="bottom" constant="16" id="iud-su-A2B"/>
+                    <constraint firstAttribute="trailing" secondItem="rBN-jN-BJd" secondAttribute="trailing" constant="16" id="iZ3-Kb-5Xb"/>
+                    <constraint firstItem="rBN-jN-BJd" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="myN-3f-KtC"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="subtitle" destination="ZFc-di-hju" id="Czv-3F-27o"/>
                 <outlet property="title" destination="fQd-Iv-S1R" id="Htl-Mi-WOO"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="134.93303571428569"/>
+            <point key="canvasLocation" x="137.68115942028987" y="121.875"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="chevron.right.circle.fill" catalog="system" width="128" height="121"/>
+    </resources>
 </document>

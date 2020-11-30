@@ -54,7 +54,6 @@ extension DiscoverViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GenreViewCell", for: indexPath) as! GenreViewCell
         cell.title.text = viewModel.genres[indexPath.row].name
-        cell.subtitle.text = "\(viewModel.genres[indexPath.row].id)"
         cell.selectionStyle = .none
         
         return cell
