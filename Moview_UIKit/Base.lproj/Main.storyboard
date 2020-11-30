@@ -60,6 +60,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="T9g-Z4-6il" firstAttribute="leading" secondItem="aPu-xh-IKo" secondAttribute="leading" id="JOL-Rk-WIO"/>
                             <constraint firstItem="T9g-Z4-6il" firstAttribute="top" secondItem="aPu-xh-IKo" secondAttribute="top" id="SDY-v6-k1P"/>

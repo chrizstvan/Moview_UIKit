@@ -16,6 +16,7 @@ class MovieOverviewCell: UITableViewCell {
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var ratingNumLabel: UILabel!
     
     var movie: Movie? {
         didSet {
@@ -26,6 +27,7 @@ class MovieOverviewCell: UITableViewCell {
             durationLabel.text = movie.durationText
             overviewLabel.text = movie.overview
             ratingLabel.text = movie.ratingText
+            ratingNumLabel.text = movie.scoreText
         }
     }
     

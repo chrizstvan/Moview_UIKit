@@ -90,6 +90,18 @@ class MovieStore: MovieService {
         )
     }
     
+    func fetchReviews(id: Int, completion: @escaping (Result<ReviewResponse, MovieError>) -> ()) {
+        guard let url = URL(string: "\(baseURL)/movie/\(id)/reviews") else {
+            completion(.failure(.invalidEndpoint))
+            return
+        }
+        
+        self.loadUrlAndDecode(
+            url: url,
+            completion: completion
+        )
+    }
+    
     // Helper Method
     private func loadUrlAndDecode<D: Decodable>(
         url: URL,

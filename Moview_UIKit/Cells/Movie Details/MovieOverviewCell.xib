@@ -40,7 +40,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="overview" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GeP-rB-e4b">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GeP-rB-e4b">
                         <rect key="frame" x="16" y="243.5" width="64.5" height="19.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <nil key="textColor"/>
@@ -52,9 +52,16 @@
                         <color key="textColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="num rate" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fM4-qv-Sv4">
+                        <rect key="frame" x="61.5" y="277.5" width="64.5" height="19.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="GeP-rB-e4b" firstAttribute="leading" secondItem="1c0-n2-Hwp" secondAttribute="leading" id="04r-EF-83K"/>
+                    <constraint firstItem="fM4-qv-Sv4" firstAttribute="firstBaseline" secondItem="gUq-q1-xbR" secondAttribute="firstBaseline" id="4Mo-Sw-DfZ"/>
                     <constraint firstAttribute="bottom" secondItem="gUq-q1-xbR" secondAttribute="bottom" constant="16" id="5Fn-3E-oPy"/>
                     <constraint firstItem="YqD-sC-fNI" firstAttribute="leading" secondItem="1c0-n2-Hwp" secondAttribute="trailing" constant="8" id="8oZ-li-Fb5"/>
                     <constraint firstItem="gUq-q1-xbR" firstAttribute="leading" secondItem="1c0-n2-Hwp" secondAttribute="leading" id="HYe-8V-SIe"/>
@@ -62,6 +69,7 @@
                     <constraint firstItem="YqD-sC-fNI" firstAttribute="firstBaseline" secondItem="1c0-n2-Hwp" secondAttribute="firstBaseline" id="Iiq-Rx-oWv"/>
                     <constraint firstItem="V1n-Qq-Syo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="JRj-qZ-Od3"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GeP-rB-e4b" secondAttribute="trailing" constant="16" id="Zey-t2-Vtp"/>
+                    <constraint firstItem="fM4-qv-Sv4" firstAttribute="leading" secondItem="gUq-q1-xbR" secondAttribute="trailing" constant="16" id="avR-hJ-Uht"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gUq-q1-xbR" secondAttribute="trailing" constant="16" id="c3u-NU-vBd"/>
                     <constraint firstItem="8hg-bG-bQu" firstAttribute="firstBaseline" secondItem="1c0-n2-Hwp" secondAttribute="firstBaseline" id="cXq-yy-y5T"/>
                     <constraint firstItem="1c0-n2-Hwp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="iEs-Oh-1BD"/>
@@ -79,6 +87,7 @@
                 <outlet property="genreLabel" destination="1c0-n2-Hwp" id="tx9-5f-DTq"/>
                 <outlet property="overviewLabel" destination="GeP-rB-e4b" id="YgT-Z8-SBO"/>
                 <outlet property="ratingLabel" destination="gUq-q1-xbR" id="Gea-Ka-VIH"/>
+                <outlet property="ratingNumLabel" destination="fM4-qv-Sv4" id="XbD-tw-hdv"/>
                 <outlet property="yearLabel" destination="YqD-sC-fNI" id="M2c-C9-ayT"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="188.83928571428569"/>

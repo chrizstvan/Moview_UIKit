@@ -12,7 +12,7 @@ class GenreListViewController: UIViewController, Storyboarded {
     var pageTitle: String?
     var genreId: Int?
 
-    private var movies: [Movie] = []
+    private var viewModel = GenreListViewModel()
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -23,16 +23,13 @@ class GenreListViewController: UIViewController, Storyboarded {
     
     private func getDiscover(id: Int?) {
         guard let genreId = id else { return }
-        MovieStore.shared.fetchDiscover(genre: "\(genreId)", page: 1) { [weak self] result in
-            switch result {
-            case .success(let response):
-                DispatchQueue.main.async {
-                    self?.movies = response.results
-                    self?.collectionView.reloadData()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
+        viewModel.getDiscover(id: "\(genreId)") {[weak self] error in
+            if error != nil {
+                // @todo: show error messages
+                print(error!)
             }
+            
+            self?.collectionView.reloadData()
         }
     }
     
@@ -54,12 +51,12 @@ class GenreListViewController: UIViewController, Storyboarded {
 
 extension GenreListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        movies.count
+        viewModel.movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MoviePosterViewCell", for: indexPath) as! MoviePosterViewCell
-        cell.movie = movies[indexPath.item]
+        cell.movie = viewModel.movies[indexPath.item]
         
         return cell
     }
@@ -70,7 +67,8 @@ extension GenreListViewController: UICollectionViewDataSource {
 extension GenreListViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let destination = MovieDetailViewController.instantiate()
-        destination.movie = movies[indexPath.item]
+        destination.id = viewModel.movies[indexPath.item].id
+        destination.pageTitle = viewModel.movies[indexPath.item].title
         navigationController?.pushViewController(destination, animated: true)
     }
     

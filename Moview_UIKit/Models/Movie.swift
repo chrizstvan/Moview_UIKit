@@ -16,6 +16,13 @@ struct GenreResponse: Decodable {
     let genres: [Genre]
 }
 
+struct ReviewResponse: Decodable {
+    let page: Int
+    let results: [Review]?
+    let totalPages: Int
+    let totalResults: Int
+}
+
 struct Movie: Decodable, Identifiable {
     let id: Int
     let title: String
@@ -148,4 +155,17 @@ struct MovieVideo: Decodable, Identifiable {
 struct Genre: Decodable {
     let id: Int
     let name: String
+}
+
+struct AuthorDetail: Decodable {
+    let name: String
+    let username: String
+    let avatarPath: String?
+    let rating: Int
+}
+
+struct Review: Decodable {
+    let author: String
+    let authorDetails: AuthorDetail
+    let content: String
 }

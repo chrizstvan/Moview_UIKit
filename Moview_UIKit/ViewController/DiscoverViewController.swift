@@ -9,32 +9,24 @@
 import UIKit
 
 class DiscoverViewController: UIViewController, Storyboarded {
-    
-    private var genres: [Genre] = []
+    private var viewModel = DiscoverViewModel()
     @IBOutlet weak var tableView: UITableView!
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        //loadDiscover()
         setUpController()
         getGenres()
-        
     }
     
-    func getGenres() {
-        MovieStore.shared.fetchGenres { [weak self] result in
-            switch result {
-            case .success(let response):
-                DispatchQueue.main.async {
-                    self?.genres = response.genres
-                    self?.tableView.reloadData()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
+    private func getGenres() {
+        viewModel.getGenres {[weak self] error in
+            if error != nil {
+                // @todo: show alert error messages
+                print(error!)
             }
+            
+            self?.tableView.reloadData()
         }
     }
     
@@ -56,13 +48,13 @@ class DiscoverViewController: UIViewController, Storyboarded {
 
 extension DiscoverViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return genres.count
+        return viewModel.genres.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GenreViewCell", for: indexPath) as! GenreViewCell
-        cell.title.text = genres[indexPath.row].name
-        cell.subtitle.text = "\(genres[indexPath.row].id)"
+        cell.title.text = viewModel.genres[indexPath.row].name
+        cell.subtitle.text = "\(viewModel.genres[indexPath.row].id)"
         cell.selectionStyle = .none
         
         return cell
@@ -78,8 +70,8 @@ extension DiscoverViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let destination = GenreListViewController.instantiate()
-        destination.pageTitle = genres[indexPath.row].name
-        destination.genreId = genres[indexPath.row].id
+        destination.pageTitle = viewModel.genres[indexPath.row].name
+        destination.genreId = viewModel.genres[indexPath.row].id
         navigationController?.pushViewController(destination, animated: true)
         
     }
