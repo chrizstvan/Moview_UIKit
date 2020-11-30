@@ -36,6 +36,7 @@
 		8BEF03CB2574B3D600B163CD /* TrailerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BEF03C92574B3D600B163CD /* TrailerCell.xib */; };
 		8BEF03CE2574DF7500B163CD /* ReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF03CC2574DF7500B163CD /* ReviewCell.swift */; };
 		8BEF03CF2574DF7500B163CD /* ReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BEF03CD2574DF7500B163CD /* ReviewCell.xib */; };
+		8BEF03D12575121600B163CD /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF03D02575121600B163CD /* WebViewController.swift */; };
 		D0F096B5317DC62E87E43975 /* Pods_Moview_UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3542BBC844CD779A621F958F /* Pods_Moview_UIKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		8BEF03C92574B3D600B163CD /* TrailerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrailerCell.xib; sourceTree = "<group>"; };
 		8BEF03CC2574DF7500B163CD /* ReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCell.swift; sourceTree = "<group>"; };
 		8BEF03CD2574DF7500B163CD /* ReviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewCell.xib; sourceTree = "<group>"; };
+		8BEF03D02575121600B163CD /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				8BEF0392257214EF00B163CD /* DiscoverViewController.swift */,
 				8BEF03B125734DCF00B163CD /* GenreListViewController.swift */,
 				8BEF03BE25738F2B00B163CD /* MovieDetailViewController.swift */,
+				8BEF03D02575121600B163CD /* WebViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BEF039C257221BE00B163CD /* Movie.swift in Sources */,
+				8BEF03D12575121600B163CD /* WebViewController.swift in Sources */,
 				8BEF03C725749DB800B163CD /* MovieDetailViewModel.swift in Sources */,
 				8BEF03A12572220C00B163CD /* MovieStore.swift in Sources */,
 				8BEF03822572127600B163CD /* ViewController.swift in Sources */,

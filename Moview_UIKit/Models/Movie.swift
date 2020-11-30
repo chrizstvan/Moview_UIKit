@@ -168,4 +168,8 @@ struct Review: Decodable {
     let author: String
     let authorDetails: AuthorDetail
     let content: String
+    
+    var avatatURL: URL {
+        return URL(string: "https://image.tmdb.org/t/p/w500\(authorDetails.avatarPath ?? "")")!
+    }
 }

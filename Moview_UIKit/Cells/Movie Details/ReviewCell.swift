@@ -9,14 +9,12 @@
 import UIKit
 
 class ReviewCell: UITableViewCell {
-    @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var content: UILabel!
     
     var review: Review? {
         didSet {
             guard let review = review else { return }
-            //self.avatar.sd_setImage(with: URL(string: review.authorDetails.avatarPath ?? "")!)
             self.username.text = review.authorDetails.username
             self.content.text = review.content
         }

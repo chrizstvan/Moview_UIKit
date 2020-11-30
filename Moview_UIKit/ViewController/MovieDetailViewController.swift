@@ -98,5 +98,14 @@ extension MovieDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            guard let url = viewModel.movie?.youtubeTrailers?[indexPath.row].youtubeURL else { return }
+            let destination = WebViewController(url: url, title: pageTitle!)
+            let navVC = UINavigationController(rootViewController: destination)
+            present(navVC, animated: true)
+        }
+    }
 }
 
