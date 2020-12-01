@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8BEF037E2572127600B163CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF037D2572127600B163CD /* AppDelegate.swift */; };
 		8BEF03802572127600B163CD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF037F2572127600B163CD /* SceneDelegate.swift */; };
-		8BEF03822572127600B163CD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF03812572127600B163CD /* ViewController.swift */; };
 		8BEF03852572127600B163CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BEF03832572127600B163CD /* Main.storyboard */; };
 		8BEF03872572127A00B163CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BEF03862572127A00B163CD /* Assets.xcassets */; };
 		8BEF038A2572127A00B163CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BEF03882572127A00B163CD /* LaunchScreen.storyboard */; };
@@ -47,7 +46,6 @@
 		8BEF037A2572127600B163CD /* Moview_UIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moview_UIKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BEF037D2572127600B163CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BEF037F2572127600B163CD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8BEF03812572127600B163CD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8BEF03842572127600B163CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8BEF03862572127A00B163CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BEF03892572127A00B163CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -131,7 +129,6 @@
 		8BEF03912572144D00B163CD /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				8BEF03812572127600B163CD /* ViewController.swift */,
 				8BEF0392257214EF00B163CD /* DiscoverViewController.swift */,
 				8BEF03B125734DCF00B163CD /* GenreListViewController.swift */,
 				8BEF03BE25738F2B00B163CD /* MovieDetailViewController.swift */,
@@ -351,7 +348,6 @@
 				8BEF03D12575121600B163CD /* WebViewController.swift in Sources */,
 				8BEF03C725749DB800B163CD /* MovieDetailViewModel.swift in Sources */,
 				8BEF03A12572220C00B163CD /* MovieStore.swift in Sources */,
-				8BEF03822572127600B163CD /* ViewController.swift in Sources */,
 				8BEF03BC25738B1700B163CD /* MovieOverviewCell.swift in Sources */,
 				8BEF03B52573553E00B163CD /* MoviePosterViewCell.swift in Sources */,
 				8BEF0393257214EF00B163CD /* DiscoverViewController.swift in Sources */,

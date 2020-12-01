@@ -11,6 +11,8 @@ import UIKit
 class GenreListViewController: UIViewController, Storyboarded {
     var pageTitle: String?
     var genreId: Int?
+    private var currentPage = 1
+    private var paginating = false
 
     private var viewModel = GenreListViewModel()
     @IBOutlet weak var collectionView: UICollectionView!
@@ -18,17 +20,18 @@ class GenreListViewController: UIViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpController()
-        getDiscover(id: genreId)
+        getDiscover(id: genreId, isPaginating: paginating)
     }
     
-    private func getDiscover(id: Int?) {
-        guard let genreId = id else { return }
-        viewModel.getDiscover(id: "\(genreId)") {[weak self] error in
+    private func getDiscover(id: Int?, isPaginating: Bool) {
+        guard isPaginating, let genreId = id else { return }
+        print("current page: \(currentPage)")
+        viewModel.getDiscover(id: "\(genreId)", page: currentPage) {[weak self] error in
             if error != nil {
                 // @todo: show error messages
                 print(error!)
             }
-            
+            self?.currentPage += 1
             self?.collectionView.reloadData()
         }
     }
@@ -42,6 +45,8 @@ class GenreListViewController: UIViewController, Storyboarded {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = pageTitle
         navigationItem.largeTitleDisplayMode = .automatic
+        
+        paginating = true
     }
     
     private func registerCell() {
@@ -77,5 +82,29 @@ extension GenreListViewController: UICollectionViewDelegateFlowLayout, UICollect
             width: (collectionView.frame.size.width - 10) / 2 ,
             height: collectionView.frame.size.width * 0.7
         )
+    }
+}
+
+extension GenreListViewController: UIScrollViewDelegate {
+    private func hasScrlolledEnoughTriggerPaggination(paginationOffset: CGFloat) -> Bool {
+        let scrollHeight = collectionView.contentSize.height
+        let currenScrollOffset = collectionView.contentOffset.y
+        let viewHeight = collectionView.frame.size.height
+        return currenScrollOffset > 0 && scrollHeight - currenScrollOffset < paginationOffset * viewHeight
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView == collectionView else {
+            return
+        }
+        
+        if  hasScrlolledEnoughTriggerPaggination(paginationOffset: 3) {
+            paginating = true
+        }
+        
+        if hasScrlolledEnoughTriggerPaggination(paginationOffset: 2) {
+            getDiscover(id: genreId, isPaginating: paginating)
+            paginating = false
+        }
     }
 }
