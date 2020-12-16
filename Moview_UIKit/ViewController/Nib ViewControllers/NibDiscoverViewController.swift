@@ -1,20 +1,20 @@
 //
-//  DiscoverViewController.swift
+//  NibDiscoverViewController.swift
 //  Moview_UIKit
 //
-//  Created by Chris Stev on 28/11/20.
+//  Created by Chris Stev on 16/12/20.
 //  Copyright © 2020 ADI Consulting Test. All rights reserved.
 //
 
 import UIKit
 
-class DiscoverViewController: UIViewController, Storyboarded {
-    private var viewModel = DiscoverViewModel()
+class NibDiscoverViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-
+    
+     private var viewModel = DiscoverViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpController()
         getGenres()
     }
@@ -46,29 +46,27 @@ class DiscoverViewController: UIViewController, Storyboarded {
     }
 }
 
-extension DiscoverViewController: UITableViewDataSource {
+extension NibDiscoverViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.genres.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "GenreViewCell", for: indexPath) as! GenreViewCell
-        cell.title.text = viewModel.genres[indexPath.row].name
-        cell.selectionStyle = .none
-        
-        return cell
-    }
-    
-    
+           return viewModel.genres.count
+       }
+       
+       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+           let cell = tableView.dequeueReusableCell(withIdentifier: "GenreViewCell", for: indexPath) as! GenreViewCell
+           cell.title.text = viewModel.genres[indexPath.row].name
+           cell.selectionStyle = .none
+           
+           return cell
+       }
 }
 
-extension DiscoverViewController: UITableViewDelegate {
+extension NibDiscoverViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let destination = GenreListViewController.instantiate()
+        let destination = NibGenreListViewController()
         destination.pageTitle = viewModel.genres[indexPath.row].name
         destination.genreId = viewModel.genres[indexPath.row].id
         navigationController?.pushViewController(destination, animated: true)

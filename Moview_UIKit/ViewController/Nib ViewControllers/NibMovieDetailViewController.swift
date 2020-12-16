@@ -1,24 +1,25 @@
 //
-//  MovieDetailViewController.swift
+//  NibMovieDetailViewController.swift
 //  Moview_UIKit
 //
-//  Created by Chris Stev on 29/11/20.
+//  Created by Chris Stev on 16/12/20.
 //  Copyright © 2020 ADI Consulting Test. All rights reserved.
 //
 
 import UIKit
 
-class MovieDetailViewController: UIViewController, Storyboarded {
+class NibMovieDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var id: Int?
     var pageTitle: String?
     private var viewModel = MovieDetailViewModel()
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpController()
         getMovie(id: id)
+        setUpController()
+        registerCell()
     }
 
     private func getMovie(id: Int?) {
@@ -51,7 +52,7 @@ class MovieDetailViewController: UIViewController, Storyboarded {
     }
 }
 
-extension MovieDetailViewController: UITableViewDataSource {
+extension NibMovieDetailViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         if viewModel.isTrailerAvailable && viewModel.isReviewsAvailable {
             return 3
@@ -94,7 +95,7 @@ extension MovieDetailViewController: UITableViewDataSource {
     }
 }
 
-extension MovieDetailViewController: UITableViewDelegate {
+extension NibMovieDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
@@ -108,4 +109,3 @@ extension MovieDetailViewController: UITableViewDelegate {
         }
     }
 }
-

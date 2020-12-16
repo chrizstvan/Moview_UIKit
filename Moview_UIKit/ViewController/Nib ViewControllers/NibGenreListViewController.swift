@@ -1,28 +1,28 @@
 //
-//  GenreListViewController.swift
+//  NibGenreListViewController.swift
 //  Moview_UIKit
 //
-//  Created by Chris Stev on 29/11/20.
+//  Created by Chris Stev on 16/12/20.
 //  Copyright © 2020 ADI Consulting Test. All rights reserved.
 //
 
 import UIKit
 
-class GenreListViewController: UIViewController, Storyboarded {
+class NibGenreListViewController: UIViewController {
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     var pageTitle: String?
     var genreId: Int?
     private var currentPage = 1
     private var paginating = false
-
     private var viewModel = GenreListViewModel()
-    @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpController()
         getDiscover(id: genreId, isPaginating: paginating)
     }
-    
+
     private func getDiscover(id: Int?, isPaginating: Bool) {
         guard isPaginating, let genreId = id else { return }
         print("current page: \(currentPage)")
@@ -54,7 +54,7 @@ class GenreListViewController: UIViewController, Storyboarded {
     }
 }
 
-extension GenreListViewController: UICollectionViewDataSource {
+extension NibGenreListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.movies.count
     }
@@ -65,13 +65,11 @@ extension GenreListViewController: UICollectionViewDataSource {
         
         return cell
     }
-    
-    
 }
 
-extension GenreListViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
+extension NibGenreListViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let destination = MovieDetailViewController.instantiate()
+        let destination = NibMovieDetailViewController()
         destination.id = viewModel.movies[indexPath.item].id
         destination.pageTitle = viewModel.movies[indexPath.item].title
         navigationController?.pushViewController(destination, animated: true)
@@ -85,7 +83,7 @@ extension GenreListViewController: UICollectionViewDelegateFlowLayout, UICollect
     }
 }
 
-extension GenreListViewController: UIScrollViewDelegate {
+extension NibGenreListViewController: UIScrollViewDelegate {
     private func hasScrlolledEnoughTriggerPaggination(paginationOffset: CGFloat) -> Bool {
         let scrollHeight = collectionView.contentSize.height
         let currenScrollOffset = collectionView.contentOffset.y
