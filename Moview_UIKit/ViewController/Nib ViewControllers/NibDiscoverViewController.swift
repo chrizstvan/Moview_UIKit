@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol DiscoverViewProtocol: class {
+    func showGenres(genres: [Genre]?, errorMessages: String?)
+}
+
 class NibDiscoverViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
-     private var viewModel = DiscoverViewModel()
+    private var viewModel = DiscoverViewModel()
+    private var genres = [Genre]()
+    var presenter: DiscoverPresenterProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,14 +26,7 @@ class NibDiscoverViewController: UIViewController {
     }
     
     private func getGenres() {
-        viewModel.getGenres {[weak self] error in
-            if error != nil {
-                // @todo: show alert error messages
-                print(error!)
-            }
-            
-            self?.tableView.reloadData()
-        }
+        presenter?.getGenres()
     }
     
     private func setUpController() {
@@ -46,18 +45,32 @@ class NibDiscoverViewController: UIViewController {
     }
 }
 
+extension NibDiscoverViewController: DiscoverViewProtocol {
+    func showGenres(genres: [Genre]?, errorMessages: String?) {
+        guard errorMessages == nil else {
+            //show alert
+            return
+        }
+    
+        DispatchQueue.main.async {
+            self.genres = genres!
+            self.tableView.reloadData()
+        }
+    }
+}
+
 extension NibDiscoverViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return viewModel.genres.count
+           return genres.count
        }
        
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-           let cell = tableView.dequeueReusableCell(withIdentifier: "GenreViewCell", for: indexPath) as! GenreViewCell
-           cell.title.text = viewModel.genres[indexPath.row].name
-           cell.selectionStyle = .none
-           
-           return cell
-       }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GenreViewCell", for: indexPath) as! GenreViewCell
+        cell.title.text = genres[indexPath.row].name
+        cell.selectionStyle = .none
+        
+        return cell
+    }
 }
 
 extension NibDiscoverViewController: UITableViewDelegate {

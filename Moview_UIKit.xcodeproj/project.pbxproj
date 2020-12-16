@@ -13,6 +13,10 @@
 		8B95AAD0258A385A00E45384 /* NibGenreListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B95AACE258A385A00E45384 /* NibGenreListViewController.xib */; };
 		8B95AAD3258A3A7700E45384 /* NibMovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B95AAD1258A3A7700E45384 /* NibMovieDetailViewController.swift */; };
 		8B95AAD4258A3A7700E45384 /* NibMovieDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B95AAD2258A3A7700E45384 /* NibMovieDetailViewController.xib */; };
+		8B95AAD8258A3D2B00E45384 /* DiscoverPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B95AAD7258A3D2B00E45384 /* DiscoverPresenter.swift */; };
+		8B95AADA258A3D3A00E45384 /* DiscoverInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B95AAD9258A3D3A00E45384 /* DiscoverInteractor.swift */; };
+		8B95AADC258A3D4700E45384 /* DiscoverBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B95AADB258A3D4700E45384 /* DiscoverBuilder.swift */; };
+		8B95AADE258A3ECD00E45384 /* DiscoverRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B95AADD258A3ECD00E45384 /* DiscoverRouter.swift */; };
 		8BEF037E2572127600B163CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF037D2572127600B163CD /* AppDelegate.swift */; };
 		8BEF03802572127600B163CD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF037F2572127600B163CD /* SceneDelegate.swift */; };
 		8BEF03852572127600B163CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BEF03832572127600B163CD /* Main.storyboard */; };
@@ -52,6 +56,10 @@
 		8B95AACE258A385A00E45384 /* NibGenreListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NibGenreListViewController.xib; sourceTree = "<group>"; };
 		8B95AAD1258A3A7700E45384 /* NibMovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibMovieDetailViewController.swift; sourceTree = "<group>"; };
 		8B95AAD2258A3A7700E45384 /* NibMovieDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NibMovieDetailViewController.xib; sourceTree = "<group>"; };
+		8B95AAD7258A3D2B00E45384 /* DiscoverPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPresenter.swift; sourceTree = "<group>"; };
+		8B95AAD9258A3D3A00E45384 /* DiscoverInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverInteractor.swift; sourceTree = "<group>"; };
+		8B95AADB258A3D4700E45384 /* DiscoverBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverBuilder.swift; sourceTree = "<group>"; };
+		8B95AADD258A3ECD00E45384 /* DiscoverRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverRouter.swift; sourceTree = "<group>"; };
 		8BEF037A2572127600B163CD /* Moview_UIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moview_UIKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BEF037D2572127600B163CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BEF037F2572127600B163CD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +115,25 @@
 			path = "Nib ViewControllers";
 			sourceTree = "<group>";
 		};
+		8B95AAD5258A3CDB00E45384 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				8B95AAD6258A3CE700E45384 /* Discover */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		8B95AAD6258A3CE700E45384 /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				8B95AAD7258A3D2B00E45384 /* DiscoverPresenter.swift */,
+				8B95AAD9258A3D3A00E45384 /* DiscoverInteractor.swift */,
+				8B95AADD258A3ECD00E45384 /* DiscoverRouter.swift */,
+				8B95AADB258A3D4700E45384 /* DiscoverBuilder.swift */,
+			);
+			path = Discover;
+			sourceTree = "<group>";
+		};
 		8BEF03712572127600B163CD = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +155,7 @@
 		8BEF037C2572127600B163CD /* Moview_UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				8B95AAD5258A3CDB00E45384 /* Module */,
 				8BEF03A42572746300B163CD /* Cells */,
 				8BEF039D257221E500B163CD /* Services */,
 				8BEF039A257221B000B163CD /* Models */,
@@ -364,17 +392,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B95AADE258A3ECD00E45384 /* DiscoverRouter.swift in Sources */,
 				8BEF039C257221BE00B163CD /* Movie.swift in Sources */,
 				8BEF03D12575121600B163CD /* WebViewController.swift in Sources */,
 				8BEF03C725749DB800B163CD /* MovieDetailViewModel.swift in Sources */,
+				8B95AAD8258A3D2B00E45384 /* DiscoverPresenter.swift in Sources */,
 				8BEF03A12572220C00B163CD /* MovieStore.swift in Sources */,
 				8BEF03BC25738B1700B163CD /* MovieOverviewCell.swift in Sources */,
+				8B95AADC258A3D4700E45384 /* DiscoverBuilder.swift in Sources */,
 				8BEF03B52573553E00B163CD /* MoviePosterViewCell.swift in Sources */,
 				8BEF037E2572127600B163CD /* AppDelegate.swift in Sources */,
 				8BEF039625721C1D00B163CD /* Storyboarded+Extension.swift in Sources */,
 				8BEF03AD2572A78D00B163CD /* GenreViewCell.swift in Sources */,
 				8BEF03B82573560300B163CD /* UView+Extension.swift in Sources */,
 				8B95AAD3258A3A7700E45384 /* NibMovieDetailViewController.swift in Sources */,
+				8B95AADA258A3D3A00E45384 /* DiscoverInteractor.swift in Sources */,
 				8BEF03CA2574B3D600B163CD /* TrailerCell.swift in Sources */,
 				8BEF03A32572713400B163CD /* UICollectionView+Extension.swift in Sources */,
 				8BEF03CE2574DF7500B163CD /* ReviewCell.swift in Sources */,
