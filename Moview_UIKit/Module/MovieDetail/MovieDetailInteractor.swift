@@ -29,14 +29,17 @@ final class MovieDetailInteractor: MovieDetailInteractorProtocol {
     }
     
     func fetchReviews(id: Int, movie: Movie) {
+        
         MovieStore.shared.fetchReviews(id: id) {[weak self] result in
+            var reviews: [Review]? = nil
             switch result {
             case .success(let response):
-                let reviews = response.results
-                self?.presnter?.showDetailMovie(movie: movie, reviews: reviews!)
+                reviews = response.results
             case .failure(let error):
                 self?.presnter?.showError(messages: error.localizedDescription)
             }
+            
+            self?.presnter?.showDetailMovie(movie: movie, reviews: reviews)
         }
     }
     

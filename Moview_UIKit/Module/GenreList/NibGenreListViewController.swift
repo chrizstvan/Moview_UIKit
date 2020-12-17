@@ -94,7 +94,7 @@ extension NibGenreListViewController: UICollectionViewDataSource {
 
 extension NibGenreListViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter?.didSelectMovies(indexPath: indexPath)
+        presenter?.didSelectMovies(indexPath: indexPath, movies: self.movies)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

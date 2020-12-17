@@ -17,7 +17,7 @@ protocol MovieDetailPresenterProtocol {
 
 protocol MovieDetailOutputInteractorProtocol: class {
     var view: MovieDetailViewProtocol? { get set }
-    func showDetailMovie(movie: Movie, reviews: [Review])
+    func showDetailMovie(movie: Movie, reviews: [Review]?)
     func showError(messages: String)
 }
 
@@ -65,7 +65,7 @@ final class MovieDetailPresnter: MovieDetailPresenterProtocol, MovieDetailOutput
         interactor?.fetchMovie(id: id)
     }
     
-    func showDetailMovie(movie: Movie, reviews: [Review]) {
+    func showDetailMovie(movie: Movie, reviews: [Review]?) {
         self.movieResult = movie
         self.reviewsResult = reviews
         view?.sectionNumber = self.numberOfSection

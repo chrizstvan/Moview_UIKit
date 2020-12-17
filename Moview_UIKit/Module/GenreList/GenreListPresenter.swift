@@ -12,7 +12,7 @@ protocol GenreListPresenterProtocol {
     var interactor: GenreListInteractorProtocol? { get set }
     var router: GenreListRouterProtocol? { get set }
     func getMovies(id: Int, page: Int)
-    func didSelectMovies(indexPath: IndexPath)
+    func didSelectMovies(indexPath: IndexPath, movies: [Movie])
 }
 
 protocol GenreListOutputInteractorProtocol: class {
@@ -41,8 +41,7 @@ final class GenreListPresenter: GenreListPresenterProtocol, GenreListOutputInter
         view?.populateMovies(movies: moviesResult, page: currentPage, errorMsg: errorMsg)
     }
     
-    func didSelectMovies(indexPath: IndexPath) {
-        guard let movies = moviesResult else { return }
+    func didSelectMovies(indexPath: IndexPath, movies: [Movie]) {
         let movie = movies[indexPath.item]
         router?.routeToMovieDetail(view: view!, movie: movie)
     }
