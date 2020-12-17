@@ -13,11 +13,13 @@ final class DiscoverBuilder {
         let view = NibDiscoverViewController()
         let presenter = DiscoverPresenter()
         let interactor = DiscoverInteractor()
+        let router = DiscoverRouter()
         
         view.presenter = presenter
         presenter.interactor = interactor
-        interactor.presnter = presenter
         presenter.view = view
+        presenter.router = router
+        interactor.presnter = presenter
         
         return view
     }

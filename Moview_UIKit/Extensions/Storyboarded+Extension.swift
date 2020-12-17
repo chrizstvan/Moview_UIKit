@@ -27,3 +27,22 @@ extension Storyboarded where Self: UIViewController {
         return storyboard.instantiateViewController(withIdentifier: className) as! Self
     }
 }
+
+extension UIViewController {
+    func showErrorAlert(_ message: String) {
+        let alert = UIAlertController(
+            title: "Error",
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        let cancel = UIAlertAction(
+            title: "OK",
+            style: .cancel,
+            handler: nil
+        )
+        
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+    }
+}

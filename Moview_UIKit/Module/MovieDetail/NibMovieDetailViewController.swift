@@ -8,12 +8,27 @@
 
 import UIKit
 
+protocol MovieDetailViewProtocol: class {
+    var sectionNumber: Int { get set }
+    var totalTrailer: Int { get set }
+    var totalReviews: Int { get set }
+    func populateMovieDetail(trailerVideos: [MovieVideo]?, reviews: [Review]?, movie: Movie?)
+    func showError(_ messages: String)
+}
+
 class NibMovieDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var id: Int?
     var pageTitle: String?
-    private var viewModel = MovieDetailViewModel()
+    var presenter: MovieDetailPresenterProtocol?
+    
+    var sectionNumber = Int()
+    var totalTrailer = Int()
+    var totalReviews = Int()
+    var trailerVideos: [MovieVideo]?
+    var reviews: [Review]?
+    var movie: Movie?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,20 +39,14 @@ class NibMovieDetailViewController: UIViewController {
 
     private func getMovie(id: Int?) {
         guard let movieId = id else { return }
-        viewModel.getMovie(id: movieId) {[weak self] error in
-            if error != nil {
-                // @todo: show error messages
-                print(error!)
-            }
-            
-            self?.tableView.reloadData()
-        }
+        presenter?.getMovie(id: movieId)
     }
     
     private func setUpController() {
         registerCell()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.tableFooterView = UIView()
         
         // set nav bar
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -52,24 +61,31 @@ class NibMovieDetailViewController: UIViewController {
     }
 }
 
+extension NibMovieDetailViewController: MovieDetailViewProtocol {
+    func showError(_ messages: String) {
+        self.showErrorAlert(messages)
+    }
+    
+    func populateMovieDetail(trailerVideos: [MovieVideo]?, reviews: [Review]?, movie: Movie?) {
+        DispatchQueue.main.async {
+            self.trailerVideos = trailerVideos
+            self.reviews = reviews
+            self.movie = movie
+            self.tableView.reloadData()
+        }
+    }
+}
+
 extension NibMovieDetailViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        if viewModel.isTrailerAvailable && viewModel.isReviewsAvailable {
-            return 3
-        } else if viewModel.isReviewsAvailable && !viewModel.isTrailerAvailable {
-            return 2
-        } else if viewModel.isTrailerAvailable && !viewModel.isReviewsAvailable {
-            return 2
-        }
-        
-        return 1
+        return sectionNumber
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
-            return viewModel.totalTrailer
+            return totalTrailer
         } else if section == 2 {
-            return viewModel.totalReviews
+            return totalReviews
         }
         
         return 1
@@ -78,18 +94,17 @@ extension NibMovieDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TrailerCell", for: indexPath) as! TrailerCell
-            cell.movieVideo = viewModel.trailerVideos?[indexPath.row]
+            cell.movieVideo = trailerVideos?[indexPath.row]
             
             return cell
         } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReviewCell", for: indexPath) as! ReviewCell
-            cell.review = viewModel.reviews?[indexPath.row]
-            
+            cell.review = reviews?[indexPath.row]
             return cell
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieOverviewCell", for: indexPath) as! MovieOverviewCell
-        cell.movie = self.viewModel.movie
+        cell.movie = self.movie
         
         return cell
     }
@@ -102,10 +117,7 @@ extension NibMovieDetailViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
-            guard let url = viewModel.movie?.youtubeTrailers?[indexPath.row].youtubeURL else { return }
-            let destination = WebViewController(url: url, title: pageTitle!)
-            let navVC = UINavigationController(rootViewController: destination)
-            present(navVC, animated: true)
+            presenter?.showYoutubeTrailer(pageTitle: pageTitle!, indexPath: indexPath)
         }
     }
 }

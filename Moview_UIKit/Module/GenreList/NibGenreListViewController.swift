@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol GenreListViewProtocol: class {
+    var presenter: GenreListPresenterProtocol? { get set }
+    func populateMovies(movies: [Movie]?, page: Int, errorMsg: String?)
+}
+
 class NibGenreListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -15,25 +20,19 @@ class NibGenreListViewController: UIViewController {
     var genreId: Int?
     private var currentPage = 1
     private var paginating = false
-    private var viewModel = GenreListViewModel()
+    
+    var movies = [Movie]()
+    var presenter: GenreListPresenterProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpController()
         getDiscover(id: genreId, isPaginating: paginating)
     }
-
+    
     private func getDiscover(id: Int?, isPaginating: Bool) {
         guard isPaginating, let genreId = id else { return }
-        print("current page: \(currentPage)")
-        viewModel.getDiscover(id: "\(genreId)", page: currentPage) {[weak self] error in
-            if error != nil {
-                // @todo: show error messages
-                print(error!)
-            }
-            self?.currentPage += 1
-            self?.collectionView.reloadData()
-        }
+        presenter?.getMovies(id: genreId, page: currentPage)
     }
     
     private func setUpController() {
@@ -54,14 +53,40 @@ class NibGenreListViewController: UIViewController {
     }
 }
 
+extension NibGenreListViewController: GenreListViewProtocol {
+    func populateMovies(movies: [Movie]?, page: Int, errorMsg: String?) {
+        guard errorMsg == nil else {
+            self.showErrorAlert(errorMsg!)
+            return
+        }
+        
+        self.currentPage = page > self.currentPage ? page : self.currentPage
+        
+        DispatchQueue.main.async {
+            if self.currentPage > 1 {
+                if let movieArray = movies {
+                    movieArray.forEach { movie in
+                        self.movies.append(movie)
+                    }
+                }
+            } else {
+                self.movies = movies!
+            }
+            
+            self.paginating = false
+            self.collectionView.reloadData()
+        }
+    }
+}
+
 extension NibGenreListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.movies.count
+        self.movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MoviePosterViewCell", for: indexPath) as! MoviePosterViewCell
-        cell.movie = viewModel.movies[indexPath.item]
+        cell.movie = movies[indexPath.item]
         
         return cell
     }
@@ -69,10 +94,7 @@ extension NibGenreListViewController: UICollectionViewDataSource {
 
 extension NibGenreListViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let destination = NibMovieDetailViewController()
-        destination.id = viewModel.movies[indexPath.item].id
-        destination.pageTitle = viewModel.movies[indexPath.item].title
-        navigationController?.pushViewController(destination, animated: true)
+        presenter?.didSelectMovies(indexPath: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -100,9 +122,8 @@ extension NibGenreListViewController: UIScrollViewDelegate {
             paginating = true
         }
         
-        if hasScrlolledEnoughTriggerPaggination(paginationOffset: 2) {
-            getDiscover(id: genreId, isPaginating: paginating)
-            paginating = false
+        if hasScrlolledEnoughTriggerPaggination(paginationOffset: 2) && paginating {
+            getDiscover(id: genreId!, isPaginating: paginating)
         }
     }
 }

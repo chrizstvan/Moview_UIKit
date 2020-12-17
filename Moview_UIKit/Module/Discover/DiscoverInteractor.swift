@@ -9,6 +9,7 @@
 import Foundation
 
 protocol DiscoverInputInteractorProtocol {
+    var presnter: DiscoverOutputInteractorProtocol? { get set}
     func fetchGenres()
 }
 
@@ -16,13 +17,13 @@ final class DiscoverInteractor: DiscoverInputInteractorProtocol {
     weak var presnter: DiscoverOutputInteractorProtocol?
     
     func fetchGenres() {
-        MovieStore.shared.fetchGenres { result in
+        MovieStore.shared.fetchGenres {[weak self] result in
             switch result {
             case .success(let response):
-                self.presnter?.showGenres(genres: response.genres, errorMessages: nil)
+                self?.presnter?.showGenres(genres: response.genres, errorMessages: nil)
             case .failure(let error):
                 // pas to presenter
-                self.presnter?.showGenres(genres: nil, errorMessages: error.localizedDescription)
+                self?.presnter?.showGenres(genres: nil, errorMessages: error.localizedDescription)
             }
         }
     }

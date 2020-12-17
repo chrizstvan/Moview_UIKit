@@ -15,7 +15,6 @@ protocol DiscoverViewProtocol: class {
 class NibDiscoverViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
-    private var viewModel = DiscoverViewModel()
     private var genres = [Genre]()
     var presenter: DiscoverPresenterProtocol?
     
@@ -48,7 +47,7 @@ class NibDiscoverViewController: UIViewController {
 extension NibDiscoverViewController: DiscoverViewProtocol {
     func showGenres(genres: [Genre]?, errorMessages: String?) {
         guard errorMessages == nil else {
-            //show alert
+            self.showErrorAlert(errorMessages!)
             return
         }
     
@@ -79,10 +78,6 @@ extension NibDiscoverViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let destination = NibGenreListViewController()
-        destination.pageTitle = viewModel.genres[indexPath.row].name
-        destination.genreId = viewModel.genres[indexPath.row].id
-        navigationController?.pushViewController(destination, animated: true)
-        
+        presenter?.didSelectGenere(indexPath: indexPath)
     }
 }

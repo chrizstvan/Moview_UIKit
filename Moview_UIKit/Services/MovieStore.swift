@@ -59,7 +59,6 @@ class MovieStore: MovieService {
     }
     
     func fetchDiscover(genre: String?, page: Int?, completion: @escaping (Result<MovieResponse, MovieError>) -> ()) {
-        print("api page: \(String(describing: page))")
         guard let url = URL(string: "\(baseURL)/discover/movie"), let currPage = page  else {
             completion(.failure(.invalidEndpoint))
             return
@@ -69,9 +68,9 @@ class MovieStore: MovieService {
             url: url,
             params: [
                 "language": "en-US",
-                "include_adult": false,
-                "include_video": true,
-                "page": currPage,
+                "include_adult": "\(false)",
+                "include_video": "\(true)",
+                "page": "\(currPage)",
                 "with_genres": genre as Any
             ],
             completion: completion
