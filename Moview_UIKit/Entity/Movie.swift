@@ -103,11 +103,11 @@ struct Movie: Decodable, Identifiable {
     var directors: [MovieCrew]? {
         crew?.filter { $0.job.lowercased() == "director" }
     }
-    
+
     var producers: [MovieCrew]? {
         crew?.filter { $0.job.lowercased() == "producer" }
     }
-    
+
     var screenWriters: [MovieCrew]? {
         crew?.filter { $0.job.lowercased() == "story" }
     }

@@ -34,16 +34,6 @@ final class GenreListPresenter: GenreListPresenterProtocol, GenreListOutputInter
     
     func showMovies(movies: [Movie]?, page: Int?, totalPage: Int, errorMsg: String?) {
         guard totalPage != page else { return }
-        print("this is presenter page: \(page!)")
-//        if page! > 1 {
-//            if let movieAray = movies {
-//                movieAray.forEach { movie in
-//                    moviesResult?.append(movie)
-//                }
-//            }
-//        } else {
-//
-//        }
         moviesResult?.removeAll()
         moviesResult = movies
         

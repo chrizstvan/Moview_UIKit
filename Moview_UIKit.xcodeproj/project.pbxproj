@@ -186,7 +186,7 @@
 				8B95AAD5258A3CDB00E45384 /* Module */,
 				8BEF03A42572746300B163CD /* Cells */,
 				8BEF039D257221E500B163CD /* Services */,
-				8BEF039A257221B000B163CD /* Models */,
+				8BEF039A257221B000B163CD /* Entity */,
 				8BEF03972572216700B163CD /* Utils */,
 				8BEF039425721BF800B163CD /* Extensions */,
 				8BEF037D2572127600B163CD /* AppDelegate.swift */,
@@ -225,12 +225,12 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		8BEF039A257221B000B163CD /* Models */ = {
+		8BEF039A257221B000B163CD /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				8BEF039B257221BE00B163CD /* Movie.swift */,
 			);
-			path = Models;
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		8BEF039D257221E500B163CD /* Services */ = {
