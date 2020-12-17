@@ -9,7 +9,7 @@
 import Foundation
 
 protocol DiscoverInputInteractorProtocol {
-    var presnter: DiscoverOutputInteractorProtocol? { get set}
+    var presnter: DiscoverOutputInteractorProtocol? { get set }
     func fetchGenres()
 }
 
@@ -22,7 +22,6 @@ final class DiscoverInteractor: DiscoverInputInteractorProtocol {
             case .success(let response):
                 self?.presnter?.showGenres(genres: response.genres, errorMessages: nil)
             case .failure(let error):
-                // pas to presenter
                 self?.presnter?.showGenres(genres: nil, errorMessages: error.localizedDescription)
             }
         }

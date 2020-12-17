@@ -9,6 +9,7 @@
 import UIKit
 
 protocol DiscoverViewProtocol: class {
+    var presenter: DiscoverPresenterProtocol? { get set }
     func showGenres(genres: [Genre]?, errorMessages: String?)
 }
 

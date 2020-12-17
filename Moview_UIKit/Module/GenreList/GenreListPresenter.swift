@@ -32,6 +32,11 @@ final class GenreListPresenter: GenreListPresenterProtocol, GenreListOutputInter
         interactor?.fetchMovies(id: "\(id)", page: page)
     }
     
+    func didSelectMovies(indexPath: IndexPath, movies: [Movie]) {
+        let movie = movies[indexPath.item]
+        router?.routeToMovieDetail(view: view!, movie: movie)
+    }
+    
     func showMovies(movies: [Movie]?, page: Int?, totalPage: Int, errorMsg: String?) {
         guard totalPage != page else { return }
         moviesResult?.removeAll()
@@ -39,10 +44,5 @@ final class GenreListPresenter: GenreListPresenterProtocol, GenreListOutputInter
         
         let currentPage = page! + pageConstant
         view?.populateMovies(movies: moviesResult, page: currentPage, errorMsg: errorMsg)
-    }
-    
-    func didSelectMovies(indexPath: IndexPath, movies: [Movie]) {
-        let movie = movies[indexPath.item]
-        router?.routeToMovieDetail(view: view!, movie: movie)
     }
 }

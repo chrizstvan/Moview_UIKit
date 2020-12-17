@@ -12,6 +12,7 @@ protocol MovieDetailViewProtocol: class {
     var sectionNumber: Int { get set }
     var totalTrailer: Int { get set }
     var totalReviews: Int { get set }
+    var presenter: MovieDetailPresenterProtocol? { get set }
     func populateMovieDetail(trailerVideos: [MovieVideo]?, reviews: [Review]?, movie: Movie?)
     func showError(_ messages: String)
 }
