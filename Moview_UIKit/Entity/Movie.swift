@@ -25,7 +25,7 @@ struct ReviewResponse: Decodable {
     let totalResults: Int
 }
 
-struct Movie: Decodable, Identifiable {
+struct Movie: Decodable, Identifiable, Hashable {
     let id: Int
     let title: String
     let backdropPath: String?
@@ -39,6 +39,14 @@ struct Movie: Decodable, Identifiable {
     let genres: [MovieGenre]?
     let credits: MovieCredit?
     let videos: MovieVideoResponse?
+    
+    static func == (lhs: Movie, rhs: Movie) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
     
     static private let yearFormatter: DateFormatter = {
         let formatter = DateFormatter()

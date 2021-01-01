@@ -16,7 +16,7 @@ final class MovieDetailBuilder {
     }
     
     func build() -> UIViewController {
-        let view = NibMovieDetailViewController()
+        let view = MovieDetailViewController() //NibMovieDetailViewController()
         let presnter = MovieDetailPresnter()
         let interactor = MovieDetailInteractor()
         let router = MovieDetailRouter()
