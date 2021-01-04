@@ -150,7 +150,7 @@ struct MovieVideoResponse: Decodable {
     let results: [MovieVideo]
 }
 
-struct MovieVideo: Decodable, Identifiable {
+struct MovieVideo: Decodable, Hashable , Identifiable {
     let id: String
     let key: String
     let name: String
@@ -159,6 +159,14 @@ struct MovieVideo: Decodable, Identifiable {
     var youtubeURL: URL? {
         guard site == "YouTube" else { return nil }
         return URL(string: "https://youtube.com/watch?v=\(key)")
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: MovieVideo, rhs: MovieVideo) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 

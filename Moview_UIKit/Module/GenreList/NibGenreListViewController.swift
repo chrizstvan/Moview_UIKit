@@ -24,6 +24,11 @@ class NibGenreListViewController: UIViewController {
     var movies = [Movie]()
     var presenter: GenreListPresenterProtocol?
     
+    enum GenreSection { case main }
+    typealias DataSource = UICollectionViewDiffableDataSource<GenreSection, Movie>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<GenreSection, Movie>
+    private lazy var dataSource = makeDataSource()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpController()
@@ -36,6 +41,7 @@ class NibGenreListViewController: UIViewController {
     }
     
     private func setUpController() {
+        //collectionView.collectionViewLayout = configureLayout()
         registerCell()
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -62,7 +68,8 @@ extension NibGenreListViewController: GenreListViewProtocol {
         
         self.currentPage = page > self.currentPage ? page : self.currentPage
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             if self.currentPage > 1 {
                 if let movieArray = movies {
                     movieArray.forEach { movie in
@@ -75,7 +82,30 @@ extension NibGenreListViewController: GenreListViewProtocol {
             
             self.paginating = false
             self.collectionView.reloadData()
+            //self.applySnapshot()
         }
+    }
+}
+
+// extension diffable datasoure
+extension NibGenreListViewController {
+    func makeDataSource() -> DataSource {
+        DataSource(
+            collectionView: collectionView
+        ) { (collectionView, indexPath, movie) -> UICollectionViewCell? in
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "MoviePosterViewCell",
+                for: indexPath) as? MoviePosterViewCell
+            cell?.movie = movie
+            return cell
+        }
+    }
+    
+    func applySnapshot(animatingDifferences: Bool = true) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(self.movies)
+        dataSource.apply(snapshot)
     }
 }
 
@@ -89,6 +119,42 @@ extension NibGenreListViewController: UICollectionViewDataSource {
         cell.movie = movies[indexPath.item]
         
         return cell
+    }
+}
+
+// extension to configure compositional layout
+extension NibGenreListViewController {
+    func configureLayout() -> UICollectionViewLayout {
+        UICollectionViewCompositionalLayout { (sectionIdx, layoutEnv) -> NSCollectionLayoutSection? in
+            return self.configureSection()
+        }
+        
+        //UICollectionViewCompositionalLayout(section: configureSection())
+    }
+    
+    func configureSection() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1)
+            )
+        )
+        
+        item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalWidth(2/3)
+        )
+        
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitem: item,
+            count: 2
+        )
+        
+        let section = NSCollectionLayoutSection(group: group)
+        return section
     }
 }
 

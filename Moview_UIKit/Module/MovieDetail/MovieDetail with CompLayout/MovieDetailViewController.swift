@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum SectionLayout: Hashable {
+enum SectionLayout: Hashable, CaseIterable {
     case overview
     case trailer
 }
@@ -27,7 +27,7 @@ class MovieDetailViewController: UIViewController {
     var reviews: [Review]?
     var movie: Movie?
     
-    var dataSource: UICollectionViewDiffableDataSource<SectionLayout, Movie>! = nil
+    var dataSource: UICollectionViewDiffableDataSource<Section<AnyHashable?, [AnyHashable]>, AnyHashable>! = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +44,7 @@ class MovieDetailViewController: UIViewController {
         collectionView.collectionViewLayout = createLayout()
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         registerCell()
+        configureDataSource()
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = pageTitle
@@ -56,32 +57,44 @@ class MovieDetailViewController: UIViewController {
     }
     
     private func createLayout() -> UICollectionViewLayout {
-        UICollectionViewCompositionalLayout { (sectionIdx, envLayot) -> NSCollectionLayoutSection? in
-            let sectionIdentifier = self.dataSource.snapshot().sectionIdentifiers[sectionIdx]
+        return UICollectionViewCompositionalLayout { (sectionIdx, envLayot) -> NSCollectionLayoutSection? in
+            let sectionIdentifier = self.dataSource.snapshot().sectionIdentifiers[sectionIdx].headerItem!
             
-            switch sectionIdentifier {
-            case .overview:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1))
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                let group = NSCollectionLayoutGroup.vertical(
-                    layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1)),
-                    subitem: item,
-                    count: 1
-                )
-                let section = NSCollectionLayoutSection(group: group)
-                return section
-                
-            case .trailer:
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1)))
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1)), subitems: [item])
-                let section = NSCollectionLayoutSection(group: group)
-                return section
+            if sectionIdentifier is OverviewSection {
+                return self.configOverviewSection()
             }
+            
+            if sectionIdentifier is TrailerSection {
+                return self.configTrailerSection()
+            }
+            
+            return nil
         }
-        
     }
     
-    private func configureDataSource(movie: Movie?) {
+    private func configOverviewSection() -> NSCollectionLayoutSection? {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.75)),
+            subitem: item,
+            count: 1
+        )
+        let section = NSCollectionLayoutSection(group: group)
+        return section
+    }
+    
+    private func configTrailerSection() -> NSCollectionLayoutSection? {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(44)),
+            subitems: [item]
+        )
+        let section = NSCollectionLayoutSection(group: group)
+        return section
+    }
+    
+    /*private func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource<SectionLayout, Movie>(collectionView: collectionView) { (collectionView, indexPath, movie) -> UICollectionViewCell? in
             guard let sectionIdentifier = self.dataSource.snapshot().sectionIdentifier(containingItem: movie) else {
                 return nil
@@ -89,23 +102,30 @@ class MovieDetailViewController: UIViewController {
             
             switch sectionIdentifier {
             case .overview:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CLMovieOverviewCell", for: indexPath) as! CLMovieOverviewCell
-                cell.movie = movie
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CLMovieOverviewCell", for: indexPath) as? CLMovieOverviewCell
+                cell?.movie = movie
                 return cell
             case .trailer:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CLTrailerCell", for: indexPath) as! CLTrailerCell
-                cell.movieVideo = movie.videos?.results[indexPath.item]
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CLTrailerCell", for: indexPath) as? CLTrailerCell
+                //cell?.movieVideo = movie.videos?.results[indexPath.item]
+                let movie = self.dataSource.snapshot().itemIdentifiers[indexPath.item]
+                cell?.movieVideo = movie.videos?.results[indexPath.item]
                 return cell
             }
         }
-        
-        guard let movie = movie else { return }
+    }
+    
+    private func snapshotData() {
+        guard let movie = self.movie else { return }
         var snapshot = NSDiffableDataSourceSnapshot<SectionLayout, Movie>()
-        snapshot.appendSections([.overview, .trailer])
+        snapshot.appendSections([.overview])
         snapshot.appendItems([movie])
         
+        //snapshot.appendSections([.trailer])
+        //snapshot.appendItems([movie])
+        
         dataSource.apply(snapshot)
-    }
+    }*/
 }
 
 extension MovieDetailViewController: MovieDetailViewProtocol {
@@ -115,11 +135,58 @@ extension MovieDetailViewController: MovieDetailViewProtocol {
             self.reviews = reviews
             self.movie = movie
             
-            self.configureDataSource(movie: movie)
+            //self.snapshotData()
+            self.refreshData()
         }
     }
     
     func showError(_ messages: String) {
         self.showErrorAlert(messages)
+    }
+}
+
+// configure datasource
+extension MovieDetailViewController {
+    private func configureDataSource() {
+        dataSource = UICollectionViewDiffableDataSource<Section<AnyHashable?, [AnyHashable]>, AnyHashable>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
+            
+            if let movie = item as? Movie {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CLMovieOverviewCell", for: indexPath) as? CLMovieOverviewCell
+                cell?.movie = movie
+                return cell
+            }
+            
+            if let trailer = item as? MovieVideo {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CLTrailerCell", for: indexPath) as? CLTrailerCell
+                cell?.movieVideo = trailer
+                return cell
+            }
+            
+            return nil
+        })
+    }
+    
+    func add(items: [Section<AnyHashable?, [AnyHashable]>]) {
+            
+        let payloadDatasource = DataSource(sections: items)
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Section<AnyHashable?, [AnyHashable]>, AnyHashable>()
+        payloadDatasource.sections.forEach {
+            snapshot.appendSections([$0])
+            snapshot.appendItems($0.sectionItems)
+        }
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    func refreshData() {
+        
+        var sections: [Section<AnyHashable?, [AnyHashable]>] = []
+        
+        
+        guard let movie = self.movie, let trailers = trailerVideos else { return }
+        sections.append(Section(headerItem: OverviewSection(movie: movie), sectionItems: [movie]))
+        sections.append(Section(headerItem: TrailerSection(trailers: trailers), sectionItems: trailers))
+        
+        add(items: sections)
     }
 }
