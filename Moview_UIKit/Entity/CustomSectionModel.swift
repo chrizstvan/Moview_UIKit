@@ -21,10 +21,6 @@ struct OverviewSection: Hashable {
     private let id = UUID()
     var movie: Movie
     
-    /*init(movie: Movie) {
-        self.movie = movie
-    }*/
-    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -37,10 +33,6 @@ struct OverviewSection: Hashable {
 struct TrailerSection: Hashable {
     private let id = UUID()
     var trailers: [MovieVideo]
-    
-    /*init(trailers: [MovieVideo]) {
-        self.trailers = trailers
-    }*/
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

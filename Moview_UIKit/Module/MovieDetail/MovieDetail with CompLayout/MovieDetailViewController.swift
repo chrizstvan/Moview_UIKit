@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum SectionLayout: Hashable, CaseIterable {
-    case overview
-    case trailer
-}
-
 class MovieDetailViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -55,7 +50,26 @@ class MovieDetailViewController: UIViewController {
         collectionView.rigsterCellFromNib(cellIdentifer: "CLMovieOverviewCell")
         collectionView.rigsterCellFromNib(cellIdentifer: "CLTrailerCell")
     }
+}
+
+extension MovieDetailViewController: MovieDetailViewProtocol {
+    func populateMovieDetail(trailerVideos: [MovieVideo]?, reviews: [Review]?, movie: Movie?) {
+        DispatchQueue.main.async {
+            self.trailerVideos = trailerVideos
+            self.reviews = reviews
+            self.movie = movie
+            
+            self.refreshData()
+        }
+    }
     
+    func showError(_ messages: String) {
+        self.showErrorAlert(messages)
+    }
+}
+
+//MARK: - Configure Layout
+extension MovieDetailViewController {
     private func createLayout() -> UICollectionViewLayout {
         return UICollectionViewCompositionalLayout { (sectionIdx, envLayot) -> NSCollectionLayoutSection? in
             let sectionIdentifier = self.dataSource.snapshot().sectionIdentifiers[sectionIdx].headerItem!
@@ -93,59 +107,9 @@ class MovieDetailViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         return section
     }
-    
-    /*private func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<SectionLayout, Movie>(collectionView: collectionView) { (collectionView, indexPath, movie) -> UICollectionViewCell? in
-            guard let sectionIdentifier = self.dataSource.snapshot().sectionIdentifier(containingItem: movie) else {
-                return nil
-            }
-            
-            switch sectionIdentifier {
-            case .overview:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CLMovieOverviewCell", for: indexPath) as? CLMovieOverviewCell
-                cell?.movie = movie
-                return cell
-            case .trailer:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CLTrailerCell", for: indexPath) as? CLTrailerCell
-                //cell?.movieVideo = movie.videos?.results[indexPath.item]
-                let movie = self.dataSource.snapshot().itemIdentifiers[indexPath.item]
-                cell?.movieVideo = movie.videos?.results[indexPath.item]
-                return cell
-            }
-        }
-    }
-    
-    private func snapshotData() {
-        guard let movie = self.movie else { return }
-        var snapshot = NSDiffableDataSourceSnapshot<SectionLayout, Movie>()
-        snapshot.appendSections([.overview])
-        snapshot.appendItems([movie])
-        
-        //snapshot.appendSections([.trailer])
-        //snapshot.appendItems([movie])
-        
-        dataSource.apply(snapshot)
-    }*/
 }
 
-extension MovieDetailViewController: MovieDetailViewProtocol {
-    func populateMovieDetail(trailerVideos: [MovieVideo]?, reviews: [Review]?, movie: Movie?) {
-        DispatchQueue.main.async {
-            self.trailerVideos = trailerVideos
-            self.reviews = reviews
-            self.movie = movie
-            
-            //self.snapshotData()
-            self.refreshData()
-        }
-    }
-    
-    func showError(_ messages: String) {
-        self.showErrorAlert(messages)
-    }
-}
-
-// configure datasource
+//MARK: - Configure Datasource
 extension MovieDetailViewController {
     private func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section<AnyHashable?, [AnyHashable]>, AnyHashable>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
@@ -167,7 +131,6 @@ extension MovieDetailViewController {
     }
     
     func add(items: [Section<AnyHashable?, [AnyHashable]>]) {
-            
         let payloadDatasource = DataSource(sections: items)
         
         var snapshot = NSDiffableDataSourceSnapshot<Section<AnyHashable?, [AnyHashable]>, AnyHashable>()
@@ -179,9 +142,7 @@ extension MovieDetailViewController {
     }
     
     func refreshData() {
-        
         var sections: [Section<AnyHashable?, [AnyHashable]>] = []
-        
         
         guard let movie = self.movie, let trailers = trailerVideos else { return }
         sections.append(Section(headerItem: OverviewSection(movie: movie), sectionItems: [movie]))
