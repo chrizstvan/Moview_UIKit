@@ -19,3 +19,13 @@ extension UITableView {
         register(UINib(nibName: cellIdentifer, bundle: nil), forCellReuseIdentifier: cellIdentifer)
     }
 }
+
+extension UICollectionReusableView {
+    static var nibName: UINib {
+        return UINib(nibName: reuseIdentifier, bundle: nil)
+    }
+    
+    static var reuseIdentifier: String {
+        return String(describing: self)
+    }
+}

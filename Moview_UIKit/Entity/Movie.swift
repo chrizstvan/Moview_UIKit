@@ -150,7 +150,7 @@ struct MovieVideoResponse: Decodable {
     let results: [MovieVideo]
 }
 
-struct MovieVideo: Decodable, Hashable , Identifiable {
+struct MovieVideo: Decodable, Hashable, Identifiable {
     let id: String
     let key: String
     let name: String
@@ -182,12 +182,22 @@ struct AuthorDetail: Decodable {
     let rating: Int
 }
 
-struct Review: Decodable {
+struct Review: Decodable, Hashable {
     let author: String
     let authorDetails: AuthorDetail
     let content: String
     
     var avatatURL: URL {
         return URL(string: "https://image.tmdb.org/t/p/w500\(authorDetails.avatarPath ?? "")")!
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(author)
+        hasher.combine(content)
+    }
+    
+    static func == (lhs: Review, rhs: Review) -> Bool {
+        return lhs.author == rhs.author
+            && lhs.content == rhs.content
     }
 }

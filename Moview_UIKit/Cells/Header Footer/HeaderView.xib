@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="U6b-Vx-4bR" customClass="HeaderView" customModule="Moview_UIKit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dfl-jG-bUt">
+                    <rect key="frame" x="16" y="16" width="45" height="18"/>
+                    <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldMT" family="Times New Roman" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
+            <constraints>
+                <constraint firstItem="Dfl-jG-bUt" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="16" id="BRf-aw-Tih"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Dfl-jG-bUt" secondAttribute="trailing" constant="16" id="BYO-vJ-X3t"/>
+                <constraint firstItem="Dfl-jG-bUt" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="16" id="Wzi-y4-KbW"/>
+                <constraint firstItem="VXr-Tz-HHm" firstAttribute="bottom" secondItem="Dfl-jG-bUt" secondAttribute="bottom" constant="16" id="gPe-Yw-FgL"/>
+            </constraints>
+            <connections>
+                <outlet property="titleLabel" destination="Dfl-jG-bUt" id="8H7-Is-uXQ"/>
+            </connections>
+            <point key="canvasLocation" x="129" y="77"/>
+        </collectionReusableView>
+    </objects>
+</document>
