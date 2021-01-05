@@ -41,9 +41,9 @@ class NibGenreListViewController: UIViewController {
     }
     
     private func setUpController() {
-        //collectionView.collectionViewLayout = configureLayout()
+        collectionView.collectionViewLayout = configureLayout()
         registerCell()
-        collectionView.dataSource = self
+        //collectionView.dataSource = self
         collectionView.delegate = self
         
         // set nav bar
@@ -59,6 +59,7 @@ class NibGenreListViewController: UIViewController {
     }
 }
 
+// MARK: View delegate implementation
 extension NibGenreListViewController: GenreListViewProtocol {
     func populateMovies(movies: [Movie]?, page: Int, errorMsg: String?) {
         guard errorMsg == nil else {
@@ -81,13 +82,13 @@ extension NibGenreListViewController: GenreListViewProtocol {
             }
             
             self.paginating = false
-            self.collectionView.reloadData()
-            //self.applySnapshot()
+            //self.collectionView.reloadData()
+            self.applySnapshot()
         }
     }
 }
 
-// extension diffable datasoure
+// MARK: Configure diffable datasoure
 extension NibGenreListViewController {
     func makeDataSource() -> DataSource {
         DataSource(
@@ -103,33 +104,32 @@ extension NibGenreListViewController {
     
     func applySnapshot(animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
+        snapshot.deleteAllItems()
         snapshot.appendSections([.main])
         snapshot.appendItems(self.movies)
         dataSource.apply(snapshot)
     }
 }
 
-extension NibGenreListViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.movies.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MoviePosterViewCell", for: indexPath) as! MoviePosterViewCell
-        cell.movie = movies[indexPath.item]
-        
-        return cell
-    }
-}
+//extension NibGenreListViewController: UICollectionViewDataSource {
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        self.movies.count
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MoviePosterViewCell", for: indexPath) as! MoviePosterViewCell
+//        cell.movie = movies[indexPath.item]
+//
+//        return cell
+//    }
+//}
 
-// extension to configure compositional layout
+// MARK: Configure compositional layout
 extension NibGenreListViewController {
     func configureLayout() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout { (sectionIdx, layoutEnv) -> NSCollectionLayoutSection? in
             return self.configureSection()
         }
-        
-        //UICollectionViewCompositionalLayout(section: configureSection())
     }
     
     func configureSection() -> NSCollectionLayoutSection {
@@ -158,19 +158,16 @@ extension NibGenreListViewController {
     }
 }
 
+// MARK: Selection Setup
 extension NibGenreListViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter?.didSelectMovies(indexPath: indexPath, movies: self.movies)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(
-            width: (collectionView.frame.size.width - 10) / 2 ,
-            height: collectionView.frame.size.width * 0.7
-        )
+        if dataSource.snapshot().itemIdentifiers[indexPath.row].id == movies[indexPath.row].id {
+            presenter?.didSelectMovies(indexPath: indexPath, movies: self.movies)
+        }
     }
 }
 
+// MARK: Pagination set up
 extension NibGenreListViewController: UIScrollViewDelegate {
     private func hasScrlolledEnoughTriggerPaggination(paginationOffset: CGFloat) -> Bool {
         let scrollHeight = collectionView.contentSize.height
